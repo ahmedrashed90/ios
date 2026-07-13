@@ -1,0 +1,654 @@
+/* MZJ CRM mobile/iOS compatibility layer
+   Presentation only: no Firebase paths, business logic, or CRM calculations are changed. */
+
+:root {
+  --mzj-safe-top: env(safe-area-inset-top, 0px);
+  --mzj-safe-right: env(safe-area-inset-right, 0px);
+  --mzj-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --mzj-safe-left: env(safe-area-inset-left, 0px);
+}
+
+html,
+body,
+#root,
+.app-shell,
+.main,
+.page-stack {
+  min-width: 0;
+  max-width: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  overflow-wrap: anywhere;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+.btn,
+.sidebar nav button {
+  touch-action: manipulation;
+}
+
+.table-shell {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+
+.mobile-menu-toggle,
+.mobile-sidebar-close,
+.mobile-nav-overlay {
+  display: none;
+}
+
+/* Tablet layout */
+@media (max-width: 900px) {
+  body.mobile-nav-open {
+    overflow: hidden !important;
+  }
+
+  .app-shell {
+    width: 100%;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    z-index: 1000002 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    width: min(86vw, 330px) !important;
+    max-width: 330px !important;
+    height: 100dvh !important;
+    padding: calc(16px + var(--mzj-safe-top)) 14px calc(18px + var(--mzj-safe-bottom)) !important;
+    border: 0 !important;
+    border-left: 1px solid var(--border) !important;
+    box-shadow: -22px 0 55px rgba(47, 32, 28, 0.2) !important;
+    overflow-y: auto !important;
+    transform: translateX(110%) !important;
+    transition: transform 0.24s ease !important;
+    display: block !important;
+  }
+
+  body.mobile-nav-open .sidebar {
+    transform: translateX(0) !important;
+  }
+
+  .sidebar nav {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .sidebar nav button {
+    min-height: 50px;
+    font-size: 14px;
+  }
+
+  .mobile-sidebar-close {
+    display: inline-grid;
+    place-items: center;
+    position: absolute;
+    top: calc(10px + var(--mzj-safe-top));
+    left: 10px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #fff;
+    color: var(--primary);
+    font-size: 25px;
+    line-height: 1;
+    z-index: 2;
+  }
+
+  .mobile-nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000001;
+    background: rgba(47, 32, 28, 0.46);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    border: 0;
+    padding: 0;
+  }
+
+  body.mobile-nav-open .mobile-nav-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10px max(10px, var(--mzj-safe-left)) calc(16px + var(--mzj-safe-bottom)) max(10px, var(--mzj-safe-right)) !important;
+    overflow-x: clip !important;
+  }
+
+  .topbar {
+    position: sticky !important;
+    top: max(8px, var(--mzj-safe-top)) !important;
+    z-index: 100 !important;
+    min-height: 66px !important;
+    margin: 0 0 14px !important;
+    padding: 9px 10px !important;
+    border-radius: 18px !important;
+    flex-wrap: nowrap !important;
+    gap: 9px !important;
+  }
+
+  .topbar > div {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .topbar h2 {
+    font-size: 19px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topbar p {
+    font-size: 11px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .topbar .sync-pill {
+    display: none !important;
+  }
+
+  .topbar > .btn.danger {
+    min-width: 44px !important;
+    width: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+    overflow: hidden;
+    white-space: nowrap;
+    color: transparent !important;
+    gap: 0 !important;
+  }
+
+  .topbar > .btn.danger svg {
+    color: #991b1b !important;
+    flex: 0 0 auto;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--primary);
+    box-shadow: 0 8px 20px rgba(90, 58, 50, 0.1);
+  }
+
+  .mobile-menu-toggle svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .card,
+  .stat-card,
+  .agent-card,
+  .page-head {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .stats-grid,
+  .reports-stats,
+  .kpi-page .stats-grid,
+  .agent-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .filters-grid,
+  .form-grid,
+  .settings-form,
+  .users-editor-card,
+  .database-edit-form,
+  .report-customer-date-filter,
+  .agent-grid,
+  .branch-editor {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .kanban-grid,
+  .admin-split,
+  .agent-layout,
+  .kpi-two-cols,
+  .kpi-period-grid,
+  .kpi-week-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Keep large tables usable on iPad with native horizontal scrolling. */
+  .table-shell,
+  .database-page .table-shell,
+  .users-table-card .table-shell {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+  }
+
+  .table-shell table,
+  .database-page .table-shell table,
+  .users-table-card table {
+    width: 100% !important;
+    min-width: 820px !important;
+    table-layout: auto !important;
+  }
+
+  .database-page .table-shell th,
+  .database-page .table-shell td {
+    width: auto !important;
+    min-width: 130px;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: initial !important;
+  }
+
+  .database-page .table-shell th:first-child,
+  .database-page .table-shell td:first-child {
+    min-width: 165px;
+  }
+
+  .toolbar,
+  .tabs,
+  .row-actions {
+    max-width: 100%;
+  }
+
+  .toolbar .btn,
+  .tabs .tab-btn {
+    min-height: 44px;
+  }
+
+  /* Full-height iOS-friendly modal. */
+  .modal-backdrop,
+  .kpi-modal.modal-backdrop {
+    place-items: stretch !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    padding: max(5px, var(--mzj-safe-top)) max(5px, var(--mzj-safe-right)) max(5px, var(--mzj-safe-bottom)) max(5px, var(--mzj-safe-left)) !important;
+  }
+
+  .modal-backdrop > div,
+  .modal-backdrop:has(.transfer-wizard) > div,
+  .kpi-modal-card,
+  .kpi-modal-card.pro {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100dvh - var(--mzj-safe-top) - var(--mzj-safe-bottom) - 10px) !important;
+    max-height: calc(100dvh - var(--mzj-safe-top) - var(--mzj-safe-bottom) - 10px) !important;
+    margin: 0 !important;
+    padding: 11px !important;
+    border-radius: 19px !important;
+    overflow: auto !important;
+  }
+
+  .modal-head {
+    position: sticky;
+    top: 0;
+    z-index: 8;
+    background: var(--surface);
+    padding-top: 2px;
+  }
+
+  .modal-head h3 {
+    font-size: 17px !important;
+    white-space: normal;
+  }
+
+  .chat-grid,
+  .enhanced-chat-grid {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto minmax(480px, 1fr) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    gap: 10px !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-popup-lead-meta {
+    grid-column: 1 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+  }
+
+  .customer-panel,
+  .enhanced-customer-panel {
+    max-height: 43dvh !important;
+    overflow-y: auto !important;
+    padding: 12px !important;
+    border-radius: 17px !important;
+  }
+
+  .customer-fields-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .conversation-panel {
+    min-height: 520px !important;
+    height: 68dvh !important;
+    max-height: 760px !important;
+    border-radius: 17px !important;
+    overflow: hidden !important;
+  }
+
+  .messages-list {
+    min-height: 0 !important;
+    padding: 12px !important;
+  }
+
+  .composer,
+  .composer-with-templates,
+  .unified-composer {
+    position: sticky;
+    bottom: 0;
+    z-index: 7;
+    grid-template-columns: minmax(0, 1fr) 92px !important;
+    gap: 8px !important;
+    padding: 10px 10px calc(10px + var(--mzj-safe-bottom)) !important;
+    background: rgba(251, 244, 237, 0.97) !important;
+    backdrop-filter: blur(12px);
+  }
+
+  .composer textarea,
+  .composer-with-templates textarea,
+  .unified-composer textarea {
+    grid-column: 1 !important;
+    height: auto !important;
+    min-height: 76px !important;
+    max-height: 150px !important;
+    resize: none !important;
+    font-size: 16px !important;
+  }
+
+  .composer .btn,
+  .composer-with-templates .btn,
+  .unified-composer .btn {
+    grid-column: 2 !important;
+    min-height: 76px !important;
+    height: auto !important;
+    padding-inline: 10px !important;
+  }
+
+  .login-page {
+    min-height: 100dvh !important;
+    padding: calc(16px + var(--mzj-safe-top)) max(14px, var(--mzj-safe-right)) calc(16px + var(--mzj-safe-bottom)) max(14px, var(--mzj-safe-left)) !important;
+  }
+
+  .login-card {
+    padding: 24px 18px !important;
+    border-radius: 24px !important;
+  }
+
+  .login-logo img {
+    width: min(165px, 55vw) !important;
+  }
+}
+
+/* iPhone layout: tables become readable customer cards instead of squeezed desktop rows. */
+@media (max-width: 640px) {
+  body {
+    font-size: 13px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .main {
+    padding-inline: max(8px, var(--mzj-safe-left)) max(8px, var(--mzj-safe-right)) !important;
+  }
+
+  .topbar {
+    border-radius: 16px !important;
+  }
+
+  .topbar h2 {
+    font-size: 17px !important;
+  }
+
+  .card,
+  .stat-card,
+  .agent-card,
+  .page-head {
+    padding: 14px !important;
+    border-radius: 18px !important;
+  }
+
+  .stats-grid,
+  .reports-stats,
+  .kpi-page .stats-grid,
+  .agent-kpis,
+  .filters-grid,
+  .form-grid,
+  .settings-form,
+  .users-editor-card,
+  .database-edit-form,
+  .report-customer-date-filter,
+  .agent-grid,
+  .branch-editor,
+  .customer-fields-grid,
+  .report-customer-summary,
+  .rating-scale {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stat-card {
+    min-height: 108px !important;
+  }
+
+  .stat-card strong {
+    font-size: 29px !important;
+  }
+
+  .toolbar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .toolbar > * {
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+    padding-bottom: 4px;
+  }
+
+  .tabs .tab-btn {
+    flex: 0 0 auto;
+  }
+
+  .table-shell.mzj-card-table,
+  .database-page .table-shell.mzj-card-table,
+  .users-table-card .table-shell.mzj-card-table {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  .table-shell.mzj-card-table table,
+  .database-page .table-shell.mzj-card-table table,
+  .users-table-card .table-shell.mzj-card-table table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: auto !important;
+  }
+
+  .mzj-card-table thead {
+    display: none !important;
+  }
+
+  .mzj-card-table tbody {
+    display: grid !important;
+    gap: 12px;
+  }
+
+  .mzj-card-table tbody tr {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 18px !important;
+    background: #fffdfc !important;
+    box-shadow: 0 9px 24px rgba(90, 58, 50, 0.08);
+    overflow: hidden;
+  }
+
+  .mzj-card-table tbody tr:hover {
+    background: #fffdfc !important;
+  }
+
+  .mzj-card-table tbody td {
+    display: grid !important;
+    grid-template-columns: minmax(102px, 37%) minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 9px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 10px 12px !important;
+    border-bottom: 1px solid var(--border) !important;
+    text-align: right !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: initial !important;
+    direction: rtl !important;
+    line-height: 1.65 !important;
+  }
+
+  .mzj-card-table tbody td:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .mzj-card-table tbody td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-weight: 900;
+    min-width: 0;
+  }
+
+  .mzj-card-table tbody tr.mzj-summary-row td {
+    display: block !important;
+    text-align: center !important;
+  }
+
+  .mzj-card-table tbody tr.mzj-summary-row td::before,
+  .mzj-card-table tbody td[data-label=""]::before {
+    display: none !important;
+  }
+
+  .mzj-card-table .row-actions,
+  .mzj-card-table td:last-child > div {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px !important;
+    width: 100%;
+  }
+
+  .mzj-card-table .row-actions .btn,
+  .mzj-card-table td:last-child .btn {
+    width: 100%;
+    min-height: 42px;
+    white-space: normal;
+  }
+
+  .modal-backdrop > div,
+  .modal-backdrop:has(.transfer-wizard) > div,
+  .kpi-modal-card,
+  .kpi-modal-card.pro {
+    border-radius: 15px !important;
+    padding: 9px !important;
+  }
+
+  .customer-panel,
+  .enhanced-customer-panel {
+    max-height: 48dvh !important;
+  }
+
+  .conversation-panel {
+    min-height: 500px !important;
+    height: 70dvh !important;
+  }
+
+  .message-bubble {
+    max-width: 88% !important;
+  }
+
+  .composer,
+  .composer-with-templates,
+  .unified-composer {
+    grid-template-columns: minmax(0, 1fr) 78px !important;
+  }
+
+  .composer .btn,
+  .composer-with-templates .btn,
+  .unified-composer .btn {
+    padding-inline: 7px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .topbar > .btn.danger {
+    display: none !important;
+  }
+
+  .toolbar {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mzj-card-table tbody td {
+    grid-template-columns: 96px minmax(0, 1fr) !important;
+  }
+}
+
+@media (display-mode: standalone) {
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  .topbar {
+    top: max(6px, var(--mzj-safe-top)) !important;
+  }
+}
