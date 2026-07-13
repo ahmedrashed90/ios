@@ -954,3 +954,152 @@ button,
     font-size: 22px !important;
   }
 }
+
+
+/* v3: customer data opens as a mobile sheet, leaving the chat as the main view. */
+.mobile-customer-details-toggle,
+.mobile-customer-details-close,
+.mobile-customer-details-backdrop {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  body.mobile-customer-details-sheet-open {
+    overflow: hidden !important;
+  }
+
+  .enhanced-chat-grid {
+    grid-template-rows: auto auto minmax(0, 1fr) !important;
+  }
+
+  .mobile-customer-details-toggle {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 50px;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    color: var(--primary);
+    background: #fffdfc;
+    box-shadow: 0 8px 20px rgba(90, 58, 50, 0.08);
+    text-align: right;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .mobile-customer-details-toggle-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--secondary), var(--primary-2));
+    font-size: 17px;
+  }
+
+  .mobile-customer-details-toggle-arrow {
+    color: var(--muted);
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .enhanced-chat-grid > .enhanced-customer-panel {
+    display: none !important;
+  }
+
+  .mobile-customer-details-backdrop {
+    position: fixed;
+    z-index: 1000008;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    background: rgba(47, 32, 28, 0.52);
+    backdrop-filter: blur(2px);
+  }
+
+  .enhanced-chat-grid.mobile-customer-details-open > .mobile-customer-details-backdrop {
+    display: block;
+  }
+
+  .enhanced-chat-grid.mobile-customer-details-open > .enhanced-customer-panel {
+    display: grid !important;
+    position: fixed !important;
+    z-index: 1000009 !important;
+    top: calc(var(--mzj-safe-top) + 8px) !important;
+    right: max(8px, var(--mzj-safe-right)) !important;
+    bottom: calc(var(--mzj-safe-bottom) + 8px) !important;
+    left: max(8px, var(--mzj-safe-left)) !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 10px 10px 18px !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 21px !important;
+    background: var(--surface) !important;
+    box-shadow: 0 24px 80px rgba(47, 32, 28, 0.34) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  .mobile-customer-details-close {
+    display: flex;
+    position: sticky;
+    top: -10px;
+    z-index: 5;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 46px;
+    margin: 0 0 10px;
+    padding: 8px 12px;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--primary);
+    background: rgba(255, 253, 252, 0.97);
+    backdrop-filter: blur(12px);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .mobile-customer-details-close span:first-child {
+    display: grid;
+    place-items: center;
+    width: 29px;
+    height: 29px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .enhanced-chat-grid > .conversation-panel {
+    min-height: 430px !important;
+    height: calc(100dvh - 245px - var(--mzj-safe-top) - var(--mzj-safe-bottom)) !important;
+    max-height: 720px !important;
+  }
+
+  .enhanced-chat-grid > .conversation-panel .messages-list {
+    min-height: 0 !important;
+    overflow-y: auto !important;
+  }
+
+  .enhanced-customer-panel .btn.primary.full {
+    position: sticky;
+    bottom: 0;
+    z-index: 4;
+    min-height: 50px !important;
+    margin-top: 4px;
+    box-shadow: 0 -8px 22px rgba(255, 253, 252, 0.94), 0 12px 28px rgba(90, 58, 50, 0.18);
+  }
+}
