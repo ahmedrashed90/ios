@@ -11,3 +11,16 @@
 - Changed the quick chat status label from `الحالة` to `اختيار الحالة`.
 - Increased the label visibility for sales agents.
 - No Firebase, status update, or CRM logic was changed.
+
+## v21 - فتح المحادثة عند آخر رسالة
+- عند فتح محادثة أي عميل، يتم الانتقال تلقائيًا إلى أحدث رسالة في أسفل الشات.
+- ينتظر تحميل الرسائل والصور والوسائط قبل تثبيت موضع العرض في الأسفل.
+- إذا صعد المندوب لقراءة رسائل قديمة، لا يتم سحبه إلى الأسفل تلقائيًا.
+- عند وصول أو إرسال رسالة جديدة أثناء وجوده عند آخر الشات، يتم إبقاؤه عند أحدث رسالة.
+- لم يتم تعديل Firebase أو الحالات أو إرسال الرسائل أو بيانات العملاء.
+
+
+## v22
+- Made the quick status instruction permanently visible on mobile.
+- Changed the label to `اختيار الحالة من هنا`.
+- Added a highlighted status box and arrow without changing status logic.
