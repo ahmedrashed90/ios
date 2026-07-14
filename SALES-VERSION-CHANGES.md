@@ -24,3 +24,9 @@
 - Made the quick status instruction permanently visible on mobile.
 - Changed the label to `اختيار الحالة من هنا`.
 - Added a highlighted status box and arrow without changing status logic.
+
+## v23 - Compact status selector on phones
+- Shortened the quick label to `اختيار الحالة`.
+- Kept the selector beside the customer name on phones.
+- Reduced its padding, height, font size, border, and shadow.
+- No status or Firebase logic was changed.
